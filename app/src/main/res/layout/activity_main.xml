@@ -17,7 +17,7 @@
         android:background="#9E9E9E">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/txtExpression"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -27,7 +27,7 @@
             tools:text="3+0.1415926" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/txtAnswer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -45,27 +45,27 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/imageButton1"
-            android:layout_weight="1"
+            android:id="@+id/btnClear"
             style="@style/calculatorButton"
+            android:layout_weight="1"
             app:srcCompat="@drawable/calculator_reset" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_weight="1"
+            android:id="@+id/btnChangeSign"
             style="@style/calculatorButton"
+            android:layout_weight="1"
             app:srcCompat="@drawable/calculator_changesign" />
 
         <ImageButton
-            android:id="@+id/imageButton3"
-            android:layout_weight="1"
+            android:id="@+id/btnPercentage"
             style="@style/calculatorButton"
+            android:layout_weight="1"
             app:srcCompat="@drawable/calculator_percent" />
 
         <ImageButton
-            android:id="@+id/imageButton4"
-            android:layout_weight="1"
+            android:id="@+id/btnDivision"
             style="@style/calculatorButton"
+            android:layout_weight="1"
             app:srcCompat="@drawable/calculator_divide" />
 
     </LinearLayout>
@@ -78,27 +78,27 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/imageButton6"
-            android:layout_weight="1"
+            android:id="@+id/btn7"
             style="@style/calculatorButton"
+            android:layout_weight="1"
             app:srcCompat="@drawable/calculator_7" />
 
         <ImageButton
-            android:id="@+id/imageButton7"
-            android:layout_weight="1"
+            android:id="@+id/btn8"
             style="@style/calculatorButton"
+            android:layout_weight="1"
             app:srcCompat="@drawable/calculator_8" />
 
         <ImageButton
-            android:id="@+id/imageButton8"
-            android:layout_weight="1"
+            android:id="@+id/btn9"
             style="@style/calculatorButton"
+            android:layout_weight="1"
             app:srcCompat="@drawable/calculator_9" />
 
         <ImageButton
-            android:id="@+id/imageButton9"
-            android:layout_weight="1"
+            android:id="@+id/btnMultiplication"
             style="@style/calculatorButton"
+            android:layout_weight="1"
             app:srcCompat="@drawable/calculator_times" />
     </LinearLayout>
 
@@ -110,27 +110,27 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/imageButton10"
-            android:layout_weight="1"
+            android:id="@+id/btn4"
             style="@style/calculatorButton"
+            android:layout_weight="1"
             app:srcCompat="@drawable/calculator_4" />
 
         <ImageButton
-            android:id="@+id/imageButton11"
-            android:layout_weight="1"
+            android:id="@+id/btn5"
             style="@style/calculatorButton"
+            android:layout_weight="1"
             app:srcCompat="@drawable/calculator_5" />
 
         <ImageButton
-            android:id="@+id/imageButton12"
-            android:layout_weight="1"
+            android:id="@+id/btn6"
             style="@style/calculatorButton"
+            android:layout_weight="1"
             app:srcCompat="@drawable/calculator_6" />
 
         <ImageButton
-            android:id="@+id/imageButton13"
-            android:layout_weight="1"
+            android:id="@+id/btnSubtraction"
             style="@style/calculatorButton"
+            android:layout_weight="1"
             app:srcCompat="@drawable/calculator_minus" />
     </LinearLayout>
 
@@ -142,27 +142,27 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/imageButton14"
-            android:layout_weight="1"
+            android:id="@+id/btn1"
             style="@style/calculatorButton"
+            android:layout_weight="1"
             app:srcCompat="@drawable/calculator_1" />
 
         <ImageButton
-            android:id="@+id/imageButton15"
-            android:layout_weight="1"
+            android:id="@+id/btn2"
             style="@style/calculatorButton"
+            android:layout_weight="1"
             app:srcCompat="@drawable/calculator_2" />
 
         <ImageButton
-            android:id="@+id/imageButton16"
-            android:layout_weight="1"
+            android:id="@+id/btn3"
             style="@style/calculatorButton"
+            android:layout_weight="1"
             app:srcCompat="@drawable/calculator_3" />
 
         <ImageButton
-            android:id="@+id/imageButton17"
-            android:layout_weight="1"
+            android:id="@+id/btnAddition"
             style="@style/calculatorButton"
+            android:layout_weight="1"
             app:srcCompat="@drawable/calculator_plus" />
     </LinearLayout>
 
@@ -175,21 +175,21 @@
         android:weightSum="4">
 
         <ImageButton
-            android:id="@+id/imageButton18"
-            android:layout_weight="1"
+            android:id="@+id/btn0"
             style="@style/calculatorButton"
+            android:layout_weight="1"
             app:srcCompat="@drawable/calculator_0" />
 
         <ImageButton
-            android:id="@+id/imageButton19"
-            android:layout_weight="1"
+            android:id="@+id/btnPoint"
             style="@style/calculatorButton"
+            android:layout_weight="1"
             app:srcCompat="@drawable/calculator_point" />
 
         <ImageButton
-            android:id="@+id/imageButton20"
-            android:layout_weight="2"
+            android:id="@+id/btnEquals"
             style="@style/calculatorButton"
+            android:layout_weight="2"
             app:srcCompat="@drawable/calculator_equals" />
     </LinearLayout>
 </LinearLayout>
