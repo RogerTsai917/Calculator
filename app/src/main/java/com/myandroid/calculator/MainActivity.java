@@ -124,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
                     expression = "";
                     lastCharacter = '0';
                     txtExpression.setText(expression);
+                    isPointUsed = false;
                     txtAnswer.setText("0");
                     break;
                 case R.id.btnChangeSign:
@@ -152,7 +153,12 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private void enterNumber(char number) {
-        expression = expression + number;
+        if (lastCharacter == '%' && number >= '0'&& number <= '9') {
+            expression = expression + '×' + number;
+        }
+        else {
+            expression = expression + number;
+        }
         lastCharacter = number;
         expressionState = 1;
         txtExpression.setText(expression);
@@ -265,6 +271,7 @@ public class MainActivity extends AppCompatActivity {
         if (lastCharacter >= '0' && lastCharacter <= '9' || lastCharacter == '%') {
             expression = expression + '%';
             lastCharacter = '%';
+
             txtExpression.setText(expression);
         }
     }
@@ -279,35 +286,83 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void replaceLastTwoChar(char symbol) {
-        char[] temp = expression.toCharArray();
-        char[] result = new char[temp.length-1];
-        for (int i = 0; i < result.length-1; i++) {
-            result[i] = temp[i];
-        }
-        result[result.length-1] = symbol;
-        expression = new String(result);
+        expression = expression.substring(0, expression.length()-2);
+        expression = expression + symbol;
         lastCharacter = symbol;
         txtExpression.setText(expression);
     }
 
     private void printAnswer() {
+        ArrayList<Double> numbers = new ArrayList<>();
+        ArrayList<Character> symbols = new ArrayList<>();
+        String temp = "";
 
+        //pick each number and symbol
         for (int i = 0; i < expression.length(); i++) {
-            ArrayList<Double> numbers = new ArrayList<>();
-            ArrayList<Character> symbols = new ArrayList<>();
-            String temp = "";
 
-            if (expression.charAt(i) == '-') {
+            if(expression.charAt(i) == '%') {
+                temp = String.valueOf(Double.parseDouble(temp)/100.0);
+            }
+            else if (expression.charAt(i) == '-') {
                 if (i == 0 || expression.charAt(i-1) == '×'
                         || expression.charAt(i-1) == '÷' || expression.charAt(i-1) == '+') {
-                    temp = temp + "-";
+                    temp = "-";
+                }
+            }
+            else if (expression.charAt(i) == '.') {
+                if (i ==0 || expression.charAt(i-1) <= '0' || expression.charAt(i-1) >= '9') {
+                    temp = "0.";
+                }
+                else {
+                    temp = temp + '.';
                 }
             }
             else if (expression.charAt(i) == '×' || expression.charAt(i) == '÷' || expression.charAt(i) == '+' || expression.charAt(i) == '-') {
-
+                numbers.add(Double.parseDouble(temp));
+                temp = "";
+                if (i == expression.length()-2 && expression.charAt(i+1) == '-'){
+                    break;
+                }
+                if (i != expression.length()-1) {
+                    switch (expression.charAt(i)) {
+                        case '×':
+                            symbols.add('×');
+                            break;
+                        case '÷':
+                            symbols.add('÷');
+                            break;
+                        case '+':
+                            symbols.add('+');
+                            break;
+                        case '-':
+                            symbols.add('-');
+                            break;
+                    }
+                }
             }
+            else {
+                temp = temp + expression.charAt(i);
+            }
+        }
+        if (!temp.equals("")) {
+
+            numbers.add(Double.parseDouble(temp));
         }
 
 
+        //******************text************************
+        temp = "";
+        for (int i = 0; i <numbers.size(); i++){
+            temp = temp + numbers.get(i).toString() + ", " ;
+        }
+        temp = temp + " | ";
+        for (int i = 0; i <symbols.size(); i++){
+            temp = temp + symbols.get(i)+ ", ";
+        }
+        txtAnswer.setText(temp);
+        //*********************************************
+
+        numbers.clear();
+        symbols.clear();
     }
 }
