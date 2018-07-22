@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView txtExpression, txtAnswer;
@@ -125,12 +127,10 @@ public class MainActivity extends AppCompatActivity {
                     txtAnswer.setText("0");
                     break;
                 case R.id.btnChangeSign:
-
-
+                    ChangeSign();
                     break;
                 case R.id.btnPercentage:
-
-
+                    Percentage();
                     break;
                 case R.id.btnDivision:
                     enterSymbol('÷');
@@ -190,6 +190,85 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void ChangeSign() {
+        String temp = "";
+        boolean isChange = false;
+        for (int i = expression.length()-1; i > -1; i--) {
+            if (expression.charAt(i) == '×' || expression.charAt(i) == '÷') {
+                if (lastCharacter == '×' || lastCharacter == '÷') {
+                    lastCharacter = '-';
+                    expressionState = 3;
+                }
+                temp = '-' + temp;
+                expression = expression.substring(0, i+1) + temp;
+                txtExpression.setText(expression);
+                isChange = true;
+                break;
+            }
+            else if (expression.charAt(i) == '+') {
+                if (lastCharacter == '+') {
+                    lastCharacter = '-';
+                    expressionState = 3;
+                }
+                temp = '-' + temp;
+                expression = expression.substring(0, i) + temp;
+                txtExpression.setText(expression);
+                isChange = true;
+                break;
+            }
+            else if (expression.charAt(i) == '-') {
+                if (i == 0) {
+                    if (lastCharacter == '-') {
+                        lastCharacter = '0';
+                        expressionState = 1;
+                    }
+                    expression = temp;
+                }
+                else if (expression.charAt(i-1) == '×'){
+                    if (lastCharacter == '-') {
+                        lastCharacter = '×';
+                        expressionState = 2;
+                    }
+                    expression = expression.substring(0, i) + temp;
+                }
+                else if (expression.charAt(i-1) == '÷') {
+                    if (lastCharacter == '-') {
+                        lastCharacter = '÷';
+                        expressionState = 2;
+                    }
+                    expression = expression.substring(0, i) + temp;
+                }
+                else {
+                    if (lastCharacter == '-') {
+                        lastCharacter = '+';
+                    }
+                    temp = '+' +temp;
+                    expression = expression.substring(0, i) + temp;
+                }
+
+                txtExpression.setText(expression);
+                isChange = true;
+                break;
+            }
+            else {
+                temp = expression.charAt(i) + temp;
+            }
+        }
+
+        if (!isChange){
+            expression = '-' + expression;
+            txtExpression.setText(expression);
+        }
+    }
+
+    private void Percentage() {
+        if (lastCharacter >= '0' && lastCharacter <= '9' || lastCharacter == '%') {
+            expression = expression + '%';
+            lastCharacter = '%';
+            txtExpression.setText(expression);
+        }
+    }
+
 
     private void replaceLastChar(char symbol) {
         char[] temp = expression.toCharArray();
@@ -212,6 +291,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void printAnswer() {
+
+        for (int i = 0; i < expression.length(); i++) {
+            ArrayList<Double> numbers = new ArrayList<>();
+            ArrayList<Character> symbols = new ArrayList<>();
+            String temp = "";
+
+            if (expression.charAt(i) == '-') {
+                if (i == 0 || expression.charAt(i-1) == '×'
+                        || expression.charAt(i-1) == '÷' || expression.charAt(i-1) == '+') {
+                    temp = temp + "-";
+                }
+            }
+            else if (expression.charAt(i) == '×' || expression.charAt(i) == '÷' || expression.charAt(i) == '+' || expression.charAt(i) == '-') {
+
+            }
+        }
+
 
     }
 }
