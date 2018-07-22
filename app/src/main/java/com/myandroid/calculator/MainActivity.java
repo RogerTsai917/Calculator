@@ -13,6 +13,15 @@ public class MainActivity extends AppCompatActivity {
                         btnClear, btnChangeSign, btnPercentage, btnDivision, btnMultiplication,
                         btnSubtraction, btnAddition, btnEquals;
 
+    private String expression = "";
+    private char lastCharacter;
+    private boolean isPointUsed = false;
+
+    //ExpressionState
+    // 1 mean enter number sate
+    // 2 mean last enter char is symbol
+    private int expressionState = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
         btnSubtraction = findViewById(R.id.btnSubtraction);
         btnAddition = findViewById(R.id.btnAddition);
         btnEquals = findViewById(R.id.btnEquals);
+
+        txtExpression.setText("");
+        txtAnswer.setText("0");
 
         btn0.setOnClickListener(listener);
         btn1.setOnClickListener(listener);
@@ -68,8 +80,138 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.btn0:
+                    enterNumber('0');
+                    break;
+                case R.id.btn1:
+                    enterNumber('1');
+                    break;
+                case R.id.btn2:
+                    enterNumber('2');
+                    break;
+                case R.id.btn3:
+                    enterNumber('3');
+                    break;
+                case R.id.btn4:
+                    enterNumber('4');
+                    break;
+                case R.id.btn5:
+                    enterNumber('5');
+                    break;
+                case R.id.btn6:
+                    enterNumber('6');
+                    break;
+                case R.id.btn7:
+                    enterNumber('7');
+                    break;
+                case R.id.btn8:
+                    enterNumber('8');
+                    break;
+                case R.id.btn9:
+                    enterNumber('9');
+                    break;
+                case R.id.btnPoint:
+                    if (!isPointUsed){
+                        expression = expression + ".";
+                        isPointUsed = true;
+                        txtExpression.setText(expression);
+                    }
+                    break;
+                case R.id.btnClear:
+                    expression = "";
+                    lastCharacter = '0';
+                    txtExpression.setText(expression);
+                    txtAnswer.setText("0");
+                    break;
+                case R.id.btnChangeSign:
 
+
+                    break;
+                case R.id.btnPercentage:
+
+
+                    break;
+                case R.id.btnDivision:
+                    enterSymbol('÷');
+                    break;
+                case R.id.btnMultiplication:
+                    enterSymbol('×');
+                    break;
+                case R.id.btnSubtraction:
+                    enterSymbol('-');
+                    break;
+                case R.id.btnAddition:
+                    enterSymbol('+');
+                    break;
+                case R.id.btnEquals:
+                    printAnswer();
+            }
         }
 
     };
+
+    private void enterNumber(char number) {
+        expression = expression + number;
+        lastCharacter = number;
+        expressionState = 1;
+        txtExpression.setText(expression);
+    }
+
+    private void enterSymbol(char symbol) {
+        if(symbol != '-') {
+            if (expression.equals("")) {}
+            else if (expressionState == 1) {
+                enterNumber(symbol);
+                expressionState = 2;
+                isPointUsed = false;
+            }
+            else if (expressionState == 2 && lastCharacter != symbol) {
+                replaceLastChar(symbol);
+            } else if (expressionState == 3) {
+                replaceLastTwoChar(symbol);
+                expressionState = 2;
+            }
+        }
+        // symbol = '-'
+        else {
+            if (expressionState == 1) {
+                enterNumber('-');
+                expressionState = 2;
+                isPointUsed = false;
+            }
+            else if (expressionState == 2 && lastCharacter == '+') {
+                replaceLastChar(symbol);
+            }
+            else if (expressionState == 2 && lastCharacter != '-') {
+                enterNumber(symbol);
+                expressionState = 3;
+            }
+        }
+    }
+
+
+    private void replaceLastChar(char symbol) {
+        char[] temp = expression.toCharArray();
+        temp[temp.length-1] = symbol;
+        expression = new String(temp);
+        lastCharacter = symbol;
+        txtExpression.setText(expression);
+    }
+
+    private void replaceLastTwoChar(char symbol) {
+        char[] temp = expression.toCharArray();
+        char[] result = new char[temp.length-1];
+        for (int i = 0; i < result.length-1; i++) {
+            result[i] = temp[i];
+        }
+        result[result.length-1] = symbol;
+        expression = new String(result);
+        lastCharacter = symbol;
+        txtExpression.setText(expression);
+    }
+
+    private void printAnswer() {
+
+    }
 }
