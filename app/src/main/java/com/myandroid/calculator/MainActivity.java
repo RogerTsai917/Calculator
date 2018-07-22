@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
                         btnSubtraction, btnAddition, btnEquals;
 
     private String expression = "";
+    private String answer = "";
     private char lastCharacter;
     private boolean isPointUsed = false;
 
@@ -303,13 +304,14 @@ public class MainActivity extends AppCompatActivity {
             if(expression.charAt(i) == '%') {
                 temp = String.valueOf(Double.parseDouble(temp)/100.0);
             }
-            else if (expression.charAt(i) == '-') {
+            if (expression.charAt(i) == '-') {
                 if (i == 0 || expression.charAt(i-1) == '×'
                         || expression.charAt(i-1) == '÷' || expression.charAt(i-1) == '+') {
                     temp = "-";
+                    i++;
                 }
             }
-            else if (expression.charAt(i) == '.') {
+            if (expression.charAt(i) == '.') {
                 if (i ==0 || expression.charAt(i-1) <= '0' || expression.charAt(i-1) >= '9') {
                     temp = "0.";
                 }
@@ -317,7 +319,8 @@ public class MainActivity extends AppCompatActivity {
                     temp = temp + '.';
                 }
             }
-            else if (expression.charAt(i) == '×' || expression.charAt(i) == '÷' || expression.charAt(i) == '+' || expression.charAt(i) == '-') {
+            else if (expression.charAt(i) == '×' || expression.charAt(i) == '÷'
+                        || expression.charAt(i) == '+' || expression.charAt(i) == '-') {
                 numbers.add(Double.parseDouble(temp));
                 temp = "";
                 if (i == expression.length()-2 && expression.charAt(i+1) == '-'){
@@ -350,17 +353,52 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        //******************text************************
-        temp = "";
-        for (int i = 0; i <numbers.size(); i++){
-            temp = temp + numbers.get(i).toString() + ", " ;
+            for (int i = 0; i < symbols.size(); i++) {
+                if (symbols.get(i) == '×') {
+                    Double tempDouble = numbers.get(i) * numbers.get(i+1);
+                    numbers.set(i, tempDouble) ;
+                    symbols.remove(i);
+                    numbers.remove(i+1);
+                    i--;
+                }
+                else if (symbols.get(i) == '÷') {
+                    Double tempDouble = numbers.get(i) / numbers.get(i+1);
+                    numbers.set(i, tempDouble) ;
+                    symbols.remove(i);
+                    numbers.remove(i+1);
+                    i--;
+                }
+            }
+
+            for(int i = 0; i < symbols.size(); i++) {
+                if (symbols.get(i) == '+') {
+                    Double tempDouble = numbers.get(i) + numbers.get(i+1);
+                    numbers.set(i, tempDouble) ;
+                    symbols.remove(i);
+                    numbers.remove(i+1);
+                    i--;
+                }
+                else if (symbols.get(i) == '-') {
+                    Double tempDouble = numbers.get(i) - numbers.get(i+1);
+                    numbers.set(i, tempDouble) ;
+                    symbols.remove(i);
+                    numbers.remove(i+1);
+                    i--;
+                }
+            }
+
+        answer = String.valueOf(numbers.get(0));
+        for (int i = answer.length()-1; i > -1; i--) {
+            if (answer.charAt(i) >= '1' && answer.charAt(i) <= '9') {
+                answer = answer.substring(0, i+1);
+                break;
+            }
+            else if (answer.charAt(i) == '.') {
+                answer = answer.substring(0, i);
+                break;
+            }
         }
-        temp = temp + " | ";
-        for (int i = 0; i <symbols.size(); i++){
-            temp = temp + symbols.get(i)+ ", ";
-        }
-        txtAnswer.setText(temp);
-        //*********************************************
+        txtAnswer.setText(answer);
 
         numbers.clear();
         symbols.clear();
