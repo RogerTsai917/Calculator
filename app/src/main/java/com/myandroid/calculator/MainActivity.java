@@ -301,9 +301,7 @@ public class MainActivity extends AppCompatActivity {
         //pick each number and symbol
         for (int i = 0; i < expression.length(); i++) {
 
-            if(expression.charAt(i) == '%') {
-                temp = String.valueOf(Double.parseDouble(temp)/100.0);
-            }
+
             if (expression.charAt(i) == '-') {
                 if (i == 0 || expression.charAt(i-1) == '×'
                         || expression.charAt(i-1) == '÷' || expression.charAt(i-1) == '+') {
@@ -311,7 +309,10 @@ public class MainActivity extends AppCompatActivity {
                     i++;
                 }
             }
-            if (expression.charAt(i) == '.') {
+            if(expression.charAt(i) == '%') {
+                temp = String.valueOf(Double.parseDouble(temp)/100.0);
+            }
+            else if (expression.charAt(i) == '.') {
                 if (i ==0 || expression.charAt(i-1) <= '0' || expression.charAt(i-1) >= '9') {
                     temp = "0.";
                 }
@@ -387,17 +388,24 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-        answer = String.valueOf(numbers.get(0));
-        for (int i = answer.length()-1; i > -1; i--) {
-            if (answer.charAt(i) >= '1' && answer.charAt(i) <= '9') {
-                answer = answer.substring(0, i+1);
-                break;
-            }
-            else if (answer.charAt(i) == '.') {
-                answer = answer.substring(0, i);
-                break;
+
+        if (numbers.size() == 0) {
+            answer = "0";
+        }
+        else {
+            answer = String.valueOf(numbers.get(0));
+            for (int i = answer.length()-1; i > -1; i--) {
+                if (answer.charAt(i) >= '1' && answer.charAt(i) <= '9') {
+                    answer = answer.substring(0, i+1);
+                    break;
+                }
+                else if (answer.charAt(i) == '.') {
+                    answer = answer.substring(0, i);
+                    break;
+                }
             }
         }
+
         txtAnswer.setText(answer);
 
         numbers.clear();
